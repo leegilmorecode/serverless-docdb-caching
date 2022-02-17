@@ -1,0 +1,64 @@
+{
+  "info": {
+    "_postman_id": "2f1386fd-91e1-411c-ae42-35544eda74ca",
+    "name": "serverless-docdb-service-lambda-layer",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "POST create /orders/",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"orderId\": \"16\",\n    \"description\": \"lee\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://{{db-url}}/prod/orders",
+          "protocol": "https",
+          "host": ["{{db-url}}"],
+          "path": ["prod", "orders"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET get /orders/",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://{{db-url}}/prod/orders/16",
+          "protocol": "https",
+          "host": ["{{db-url}}"],
+          "path": ["prod", "orders", "16"]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "db-url",
+      "value": "something.execute-api.eu-west-1.amazonaws.com"
+    }
+  ]
+}

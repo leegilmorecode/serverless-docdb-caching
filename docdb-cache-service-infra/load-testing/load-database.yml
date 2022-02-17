@@ -1,0 +1,34 @@
+config:
+  plugins:
+  ensure:
+    p95: 3000 # ensure latency is equal to or under 3000ms
+    maxErrorRate: 0 # no percentage of error rate i.e. no errors or pipeline fails
+  payload:
+    path: "./data/data.csv" # pull in the orders data csv
+    fields:
+      - "orderId"
+      - "description"
+    order: random # this can be random or sequence
+    skipHeader: true # skip header as this has the column headers
+    delimeter: ","
+    cast: true
+    skipEmptyLines: true
+  environments:
+    production:
+      target: "https://mrc9qoli2d.execute-api.eu-west-1.amazonaws.com/prod" # in reality these would be your domain name targets
+      phases:
+        - duration: 60 # duration of the load test scenario
+          arrivalRate: 16 # active user x seconds in duration
+          rampTo: 16 # max number of virtual users to be created
+scenarios:
+  - flow:
+      - log: "New virtual user running" # you can log using the following example
+      # create the order
+      - post:
+          url: "/orders-db"
+          json:
+            orderId: "{{ orderId }}"
+            description: "{{ description }}"
+      # get the order which has just been created
+      - get:
+          url: "/orders-db/{{ orderId }}"
